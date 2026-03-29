@@ -69,6 +69,7 @@ Este projeto destaca principalmente:
 ```bash
 git clone https://github.com/SEU_USUARIO/pokedata-api.git
 cd pokedata-api
+```
 
 ### 2. Crie e ative o ambiente virtual
 
@@ -77,23 +78,29 @@ No Windows:
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
+```
 
 ### 3. Instale as dependências
 
 ```bash
 pip install -r requirements.txt
+```
 
 ### 4. Configure as variáveis de ambiente
 Crie um arquivo chamado .env na raiz do projeto:
 
 ```bash
 DATABASE_URL=postgresql+psycopg://postgres:SUA_SENHA@localhost:5432/pokedata
+```
 
 ### 5. Inicie a aplicação
 
 ```bash
 uvicorn app.main:app --reload
+```
 
 ### 6. Acesse o swagger localmente
-http://127.0.0.1:8000/docs
 
+```bash
+http://127.0.0.1:8000/docs
+```
