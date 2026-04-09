@@ -17,14 +17,14 @@ O objetivo deste projeto é demonstrar competências em **backend** e **dados** 
 
 Este projeto destaca principalmente:
 
-- consumo de API externa
-- persistência em banco relacional
-- modelagem com SQLAlchemy
-- validação com Pydantic
-- filtros e paginação
-- endpoints analíticos
-- análise estratégica de times Pokémon
-- organização em camadas com rotas e services
+- Consumo de API externa
+- Persistência em banco relacional
+- Modelagem com SQLAlchemy
+- Validação com Pydantic
+- Filtros e paginação
+- Endpoints analíticos
+- Análise estratégica de times Pokémon
+- Organização em camadas com rotas e services
 
 ---
 
@@ -42,23 +42,22 @@ Este projeto destaca principalmente:
 ## Principais funcionalidades
 
 ### Gestão de Pokémon
-- cadastro manual de Pokémon
-- importação individual a partir da PokéAPI
-- importação em lote para popular a base
-- listagem com filtros por nome e tipo
-- paginação
-- consulta por ID
+- Cadastro manual de Pokémon
+- Importação individual a partir da PokéAPI
+- Importação em lote para popular a base
+- Listagem com filtros por nome e tipo
+- Consulta por ID
 
 ### Estatísticas e análise
-- ranking dos Pokémon com maior ataque
-- ranking dos Pokémon com maior velocidade
-- médias por tipo principal
-- resumo estatístico geral da base
-- análise simplificada de times
-- análise detalhada de times
-- identificação de tipos presentes e repetidos
-- cálculo de fraquezas, resistências e imunidades
-- médias de atributos do time
+- Ranking dos Pokémon com maior ataque
+- Ranking dos Pokémon com maior velocidade
+- Médias por tipo principal
+- Resumo estatístico geral da base
+- Análise simplificada de times
+- Análise detalhada de times
+- Identificação de tipos presentes e repetidos
+- Cálculo de fraquezas, resistências e imunidades
+- Médias de atributos do time
 
 ---
 
