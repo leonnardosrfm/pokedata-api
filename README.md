@@ -66,7 +66,7 @@ Este projeto destaca principalmente:
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/SEU_USUARIO/pokedata-api.git
+git clone https://github.com/leonnardosrfm/pokedata-api.git
 cd pokedata-api
 ```
 
