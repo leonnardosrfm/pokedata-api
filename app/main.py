@@ -17,6 +17,7 @@ API backend desenvolvida com FastAPI e PostgreSQL para:
 - cadastrar Pokémon manualmente
 - buscar Pokémon da PokéAPI
 - carregar vários Pokémon em lote
+- carregar Pokémon por geração
 - consultar lista com filtros e paginação
 - visualizar detalhes de um Pokémon por ID
 - consultar estatísticas

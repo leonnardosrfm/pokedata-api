@@ -45,8 +45,18 @@ Este projeto destaca principalmente:
 - Cadastro manual de Pokémon
 - Importação individual a partir da PokéAPI
 - Importação em lote para popular a base
+- Importação por geração da PokéAPI
 - Listagem com filtros por nome e tipo
+- Paginação
 - Consulta por ID
+
+Exemplo para carregar a primeira geração:
+
+```http
+POST /pokemon/load-generation/1
+```
+
+A resposta informa quantos Pokémon foram criados, quantos já existiam no banco e quais não puderam ser carregados.
 
 ### Estatísticas e análise
 - Ranking dos Pokémon com maior ataque

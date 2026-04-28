@@ -10,3 +10,13 @@ def fetch_pokemon_from_pokeapi(name_or_id: str | int) -> dict | None:
         return None
 
     return response.json()
+
+
+def fetch_generation_from_pokeapi(generation_id: int) -> dict | None:
+    url = f"{POKEAPI_BASE_URL}/generation/{generation_id}"
+    response = httpx.get(url, timeout=10.0)
+
+    if response.status_code != 200:
+        return None
+
+    return response.json()

@@ -1,6 +1,20 @@
 from app.models import Pokemon
 
 
+def get_pokemon_species_names_from_generation(data: dict) -> list[str]:
+    species = data.get("pokemon_species", [])
+
+    def get_species_id(item: dict) -> int:
+        url = item.get("url", "").rstrip("/")
+        try:
+            return int(url.rsplit("/", 1)[-1])
+        except ValueError:
+            return 0
+
+    ordered_species = sorted(species, key=get_species_id)
+    return [item["name"] for item in ordered_species if item.get("name")]
+
+
 def extract_types(data: dict) -> tuple[str, str | None]:
     type_1 = None
     type_2 = None

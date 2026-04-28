@@ -178,6 +178,44 @@ class PokemonListResponse(BaseModel):
         description="Lista de Pokémon retornados."
     )
 
+
+class PokemonGenerationLoadResponse(BaseModel):
+    generation_id: int = Field(
+        ...,
+        title="Geração",
+        description="Geração carregada a partir da PokéAPI."
+    )
+    total_species: int = Field(
+        ...,
+        title="Total de espécies",
+        description="Quantidade total de espécies encontradas na geração."
+    )
+    created_count: int = Field(
+        ...,
+        title="Criados",
+        description="Quantidade de Pokémon novos salvos no banco."
+    )
+    existing_count: int = Field(
+        ...,
+        title="Já existentes",
+        description="Quantidade de Pokémon que já estavam cadastrados."
+    )
+    skipped_count: int = Field(
+        ...,
+        title="Ignorados",
+        description="Quantidade de Pokémon que não puderam ser carregados."
+    )
+    skipped_pokemon: list[str] = Field(
+        ...,
+        title="Pokémon ignorados",
+        description="Nomes que falharam durante a carga."
+    )
+    items: list[PokemonResponse] = Field(
+        ...,
+        title="Pokémon carregados",
+        description="Pokémon criados ou já existentes encontrados durante a carga."
+    )
+
 class TypeStatsResponse(BaseModel):
     type: str = Field(
         ...,

@@ -3,9 +3,17 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Pokemon
-from app.pokeapi import fetch_pokemon_from_pokeapi
-from app.schemas import PokemonCreate, PokemonListResponse, PokemonResponse
-from app.services.pokemon_service import create_pokemon_from_api_data
+from app.pokeapi import fetch_generation_from_pokeapi, fetch_pokemon_from_pokeapi
+from app.schemas import (
+    PokemonCreate,
+    PokemonGenerationLoadResponse,
+    PokemonListResponse,
+    PokemonResponse,
+)
+from app.services.pokemon_service import (
+    create_pokemon_from_api_data,
+    get_pokemon_species_names_from_generation,
+)
 
 router = APIRouter(prefix="/pokemon", tags=["Pokémon"])
 
@@ -162,3 +170,66 @@ def load_pokemon_batch(
         loaded_pokemon.append(new_pokemon)
 
     return loaded_pokemon
+
+
+@router.post(
+    "/load-generation/{generation_id}",
+    response_model=PokemonGenerationLoadResponse,
+    summary="Carregar uma geração da PokéAPI",
+    description=(
+        "Busca todos os Pokémon de uma geração na PokéAPI e salva no banco de dados. "
+        "Pokémon já cadastrados são mantidos e retornados na resposta."
+    ),
+    response_description="Resumo da geração carregada.",
+)
+def load_pokemon_generation(
+    generation_id: int = Path(..., ge=1, description="Número da geração na PokéAPI."),
+    db: Session = Depends(get_db),
+):
+    generation_data = fetch_generation_from_pokeapi(generation_id)
+    if not generation_data:
+        raise HTTPException(status_code=404, detail="Geração não encontrada na PokéAPI.")
+
+    species_names = get_pokemon_species_names_from_generation(generation_data)
+    items = []
+    skipped_pokemon = []
+    created_count = 0
+    existing_count = 0
+
+    for name in species_names:
+        data = fetch_pokemon_from_pokeapi(name)
+        if not data:
+            skipped_pokemon.append(name)
+            continue
+
+        existing = (
+            db.query(Pokemon)
+            .filter((Pokemon.name == data["name"]) | (Pokemon.pokeapi_id == data["id"]))
+            .first()
+        )
+        if existing:
+            items.append(existing)
+            existing_count += 1
+            continue
+
+        try:
+            new_pokemon = create_pokemon_from_api_data(data)
+        except ValueError:
+            skipped_pokemon.append(name)
+            continue
+
+        db.add(new_pokemon)
+        db.commit()
+        db.refresh(new_pokemon)
+        items.append(new_pokemon)
+        created_count += 1
+
+    return {
+        "generation_id": generation_id,
+        "total_species": len(species_names),
+        "created_count": created_count,
+        "existing_count": existing_count,
+        "skipped_count": len(skipped_pokemon),
+        "skipped_pokemon": skipped_pokemon,
+        "items": items,
+    }
